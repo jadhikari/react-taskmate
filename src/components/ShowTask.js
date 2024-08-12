@@ -1,6 +1,16 @@
 import React from 'react'
 
-export const ShowTask = ({tasklist, setTasklist}) => {
+export const ShowTask = ({tasklist, setTasklist, task, setTask}) => {
+
+  const handelEdit = (id) => {
+    const selectedTask = tasklist.find(todo => todo.id === id );
+    setTask(selectedTask)
+  }
+
+  const handelDelete = (id) => {
+    const updateTaskList = tasklist.filter(todo => todo.id !== id);
+    setTasklist(updateTaskList)
+  }
   
   return (
     <section className='showTask'>
@@ -13,14 +23,14 @@ export const ShowTask = ({tasklist, setTasklist}) => {
       </div>
 
       <ul>
-        { tasklist.map((task) => (
-          <li id={task.id}>
+        { tasklist.map((todo) => (
+          <li key={todo.id}>
             <p>
-              <span className='name'>{task.name}</span>
-              <span className='time'>{task.time}</span>
+              <span className='name'>{todo.name}</span>
+              <span className='time'>{todo.time}</span>
             </p>
-            <i class="bi bi-pencil-square"></i>
-            <i class="bi bi-trash"></i>
+            <i onClick={() => handelEdit(todo.id) } className="bi bi-pencil-square"></i>
+            <i onClick={() => handelDelete(todo.id) } className="bi bi-trash"></i>
           </li>
         ))}
         
